@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import lightLogo from "../../Assets/SiteLogoGif/Laparts.com Dark.gif"
+import lightLogo from "../../../Assets/SiteLogoGif/Laparts.com Dark.gif"
 
 const Navbar = ({ children }) => {
     return (
