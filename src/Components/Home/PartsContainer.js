@@ -1,34 +1,46 @@
 import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
+import { headerClass } from '../../Hooks/Classes';
+import { commonButton } from '../../Hooks/Classes';
+import rootUrl from '../../Hooks/RootUrl';
+import Loading from '../Shared/Loading/Loading';
 
 const PartsContainer = () => {
 
-    const [product, setProduct] = useState([]);
 
 
-    useEffect(() => {
+    const { data: product, isLoading, error } = useQuery('limitedDataForHome', () => fetch(`${rootUrl}/ProductsLimit?total=3`).then(res => res.json()));
 
-
-    }, [])
-
-    console.log(product);
-
-
+    if (isLoading) {
+        return <Loading />
+    }
     return (
+
         <div>
 
+            <h1 className={headerClass}> Parts </h1>
+            <div className='flex flex-col gap-4 mt-8 ' >
+
+                {product.map(({ minimum, name, picture, price, quantity, description }, i) =>
+                    <div key={i} class="card lg:card-side bg-base-100 shadow-xl w-[80%] mx-auto ">
+                        <figure className='lg:h-80 lg:w-[40%]' ><img className='w-full' src={picture} alt="Album" /></figure>
+                        <div class="card-body border-[1px] lg:w-3/5 lg:border-l-0 lg:rounded-r-2xl">
+                            <h2 class="card-title"> Item Name: {name}</h2>
+                            <h2 class="card-title text-base "> Par Unite Cost: {price}$</h2>
+                            <h2 class="card-title text-base "> Minimum acceptable amount: {minimum} Piece</h2>
 
 
-            {product.map((product, i) => <div class="card lg:card-side bg-base-100 shadow-xl w-[80%] mx-auto ">
-                <figure className='lg:h-80 lg:w-[500px]' ><img className='w-full' src="https://api.lorem.space/image/album?w=400&h=400" alt="Album" /></figure>
-                <div class="card-body">
-                    <h2 class="card-title">New album is released!</h2>
-                    <p>Click the button to listen on Spotiwhy app.</p>
-                    <div class="card-actions justify-end">
-                        <button class="btn btn-primary">Listen</button>
+                            <p className='full' >{description}</p>
+                            <div class="card-actions justify-end">
+                                <Link to='/showDetails' className={`${commonButton}`}>Order Now</Link>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                )}
+
+                <div className='flex justify-center' >  <Link to='/allProducts' className={`${commonButton} `}> See All Products </Link> </div>
             </div>
-            )}
         </div>
     );
 };
