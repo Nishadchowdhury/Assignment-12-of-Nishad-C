@@ -12,29 +12,29 @@ const BusinessSummery = () => {
 
             <div className=' flex justify-center items-end lg:p-0 p-3 lg:h-[300px]'  >
                 <div className='mx-auto  lg:w-11/12 w-full   p-7 lg:p-0 mt-10 shadow-md shadow-white rounded-2xl ' >
-                    <div class="stats bg-white w-full stats-vertical lg:stats-horizontal shadow">
+                    <div className="stats bg-white w-full stats-vertical lg:stats-horizontal shadow">
 
-                        <div class="stat flex items-center justify-center flex-col border-x-1 border-gray-500 ">
-                            <div class=" mb-6 text-back "> Total sell </div>
-                            <div class="stat-value mb-8 ">13.4+ <span className='text-base' >million unites</span></div>
+                        <div className="stat flex items-center justify-center flex-col border-x-1 border-gray-500 ">
+                            <div className=" mb-6 text-back "> Total sell </div>
+                            <div className="stat-value mb-8 ">13.4+ <span className='text-base' >million unites</span></div>
                             <img className='lg:w-20 w-16 opacity-40' src={sells} alt="" />
                         </div>
 
-                        <div class="stat flex items-center justify-center flex-col border-x-1 border-gray-500 ">
-                            <div class=" mb-6 text-back "> Client Countries </div>
-                            <div class="stat-value mb-8 ">91+</div>
+                        <div className="stat flex items-center justify-center flex-col border-x-1 border-gray-500 ">
+                            <div className=" mb-6 text-back "> Client Countries </div>
+                            <div className="stat-value mb-8 ">91+</div>
                             <img className='lg:w-20 w-16 opacity-40' src={countries} alt="" />
                         </div>
 
-                        <div class="stat flex items-center justify-center flex-col border-x-1 border-gray-500 ">
-                            <div class=" mb-6 text-back "> Total Clients </div>
-                            <div class="stat-value mb-8 ">1780+ </div>
+                        <div className="stat flex items-center justify-center flex-col border-x-1 border-gray-500 ">
+                            <div className=" mb-6 text-back "> Total Clients </div>
+                            <div className="stat-value mb-8 ">1780+ </div>
                             <img className='lg:w-20 w-16 opacity-40' src={Clients} alt="" />
                         </div>
 
-                        <div class="stat flex items-center justify-center flex-col border-x-1 border-gray-500 ">
-                            <div class=" mb-6 text-back "> Total Revenue </div>
-                            <div class="stat-value mb-8 ">295+ <span className='text-base' >million usd</span></div>
+                        <div className="stat flex items-center justify-center flex-col border-x-1 border-gray-500 ">
+                            <div className=" mb-6 text-back "> Total Revenue </div>
+                            <div className="stat-value mb-8 ">295+ <span className='text-base' >million usd</span></div>
                             <img className='lg:w-20 w-16 opacity-40' src={revenue} alt="" />
                         </div>
 

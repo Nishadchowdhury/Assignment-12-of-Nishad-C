@@ -8,7 +8,7 @@ const AllProducts = () => {
     const { data: products, isLoading, error } = useQuery('allProducts', () => fetch(`${rootUrl}/allProducts`).then(res => res.json()));
 
 
-    console.log(products);
+    // console.log(products);
 
     if (isLoading) {
         return <div className="h-screen"><Loading /></div>
@@ -17,7 +17,8 @@ const AllProducts = () => {
     return (
 
         <div>
-            {products.map(({ minimum, name, picture, price, quantity, description }, i) => <div> all products </div>)
+            {
+                products.map(({ minimum, name, picture, price, quantity, description }, i) => <div> all products </div>)
             }
         </div >
     );

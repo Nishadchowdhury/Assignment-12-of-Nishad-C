@@ -12,8 +12,8 @@ const SponsoredByHP = () => {
 
                 <div className=' w-full h-full flex items-center bg-gray-400 opacity-40 p-6 lg:p-0 '>
 
-                    <div class="flex flex-col  w-full lg:flex-row lg:px-10 ">
-                        <div class="grid w-50 lg:flex-2 flex-grow h-80 card bg-base-100 rounded-box place-items-center">
+                    <div className="flex flex-col  w-full lg:flex-row lg:px-10 ">
+                        <div className="grid w-50 lg:flex-2 flex-grow h-80 card bg-base-100 rounded-box place-items-center">
                             <div className='px-4 lg:px-0'  >
                                 <h1 className={`${headerClass} text-xl text-white mb-2 `}  >Sponsored by HP</h1>
                                 <p className='text-white ' >HP is our regular sponsor ,we also provides some parts of laptop to HP . <br />
@@ -26,7 +26,7 @@ const SponsoredByHP = () => {
                             </div>
                         </div>
                         <div className='w-10 h-10 lg:block hidden ' ></div>
-                        <div class="  lg:flex hidden  flex-grow  lg:h-80 h-40 card bg-base-300 rounded-box place-items-center"></div>
+                        <div className="  lg:flex hidden  flex-grow  lg:h-80 h-40 card bg-base-300 rounded-box place-items-center"></div>
                     </div>
 
                 </div>

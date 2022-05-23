@@ -3,6 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import { PublicRouts } from './Components/Routes/Public';
 import Loading from './Components/Shared/Loading/Loading';
 import { useState } from 'react';
+import RequireAuth from './Components/Authentication/RequireAuth';
+import { ProtectedRoute } from './Components/Routes/ProtectedRoute';
 
 function App() {
 
@@ -26,8 +28,15 @@ function App() {
             PublicRouts.map(({ path, Component }, i) => <Route key={i} path={path} element={<Component />} ></Route>)
           }
 
+          {/* ProtectedRoute */}
+          <Route element={<RequireAuth />} >
+            {
+              ProtectedRoute.map(({ path, Component }, i) => <Route key={i} path={path} element={<Component />} ></Route>)
+            }
+          </Route>
 
         </Routes>
+
 
 
 
