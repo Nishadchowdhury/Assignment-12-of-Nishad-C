@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import auth from '../../firebase.init';
@@ -10,6 +10,8 @@ const CreateUser = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm();
 
+
+    const [updateProfile, updating, errorUpdate] = useUpdateProfile(auth);
     const [
         createUserWithEmailAndPassword,
         user,
@@ -19,7 +21,10 @@ const CreateUser = () => {
 
 
 
-    const onSubmit = data => {
+
+    const imageUpKey = '3e71ee8402adb8ecc47756f4a172b7ea';
+
+    const onSubmit = async data => {
         setError('');
 
         const { ConfirmPassword, email, password } = data;
@@ -28,7 +33,30 @@ const CreateUser = () => {
             return setError('please Type Same password')
         }
 
-        createUserWithEmailAndPassword(email, password)
+        // return console.log(data);
+
+        const image = data.photo[0];
+        const formData = new FormData();
+        formData.append('photo', image);
+        const imageUrl = `https://api.imgbb.com/1/upload?key=${imageUpKey}`;
+
+        fetch(imageUrl, {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Success:', result);
+            })
+
+        // await createUserWithEmailAndPassword(email, password)
+
+        console.log(data);
+
+        if (user) {
+            const { displayName } = user;
+            // await updateProfile({ displayName, photoURL })
+        }
 
 
         setError('');
@@ -55,7 +83,26 @@ const CreateUser = () => {
                             <form className='' onSubmit={handleSubmit(onSubmit)}>
                                 <div className="form-control">
                                     <label className="label py-1 ">
-                                        <span className="label-text">Email</span>
+                                        <span className="label-text text-xs">Name</span>
+                                    </label>
+                                    <input className='input input-bordered' placeholder="name" {...register("name",
+                                        {
+                                            required: {
+                                                value: true,
+                                                message: "Name is required"
+                                            }
+                                        }
+                                    )} />
+
+                                    <div className='mt-1  ml-1' >
+                                        {errors.name?.type === 'required' && <span className="label-text text-xs-alt text-red-500">{errors.name.message}</span>}
+                                        {errors.name?.type === 'pattern' && <span className="label-text text-xs-alt text-red-500">{errors.name.message}</span>}
+                                    </div>
+                                </div>
+
+                                <div className="form-control">
+                                    <label className="label py-1 ">
+                                        <span className="label-text text-xs">Email</span>
                                     </label>
                                     <input className='input input-bordered' placeholder="email" {...register("email",
                                         {
@@ -66,20 +113,20 @@ const CreateUser = () => {
 
                                             pattern: {
                                                 value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                                                message: 'error message hudai'
+                                                message: 'Please provide a valid email '
                                             }
                                         }
                                     )} />
 
                                     <div className='mt-1  ml-1' >
-                                        {errors.email?.type === 'required' && <span className="label-text-alt text-red-500">{errors.email.message}</span>}
-                                        {errors.email?.type === 'pattern' && <span className="label-text-alt text-red-500">{errors.email.message}</span>}
+                                        {errors.email?.type === 'required' && <span className="label-text text-xs-alt text-red-500">{errors.email.message}</span>}
+                                        {errors.email?.type === 'pattern' && <span className="label-text text-xs-alt text-red-500">{errors.email.message}</span>}
                                     </div>
                                 </div>
 
                                 <div className="form-control">
                                     <label className="label py-1 ">
-                                        <span className="label-text">Password</span>
+                                        <span className="label-text text-xs">Password</span>
                                     </label>
                                     <input className='input input-bordered' placeholder='Password' {...register("password",
                                         {
@@ -96,15 +143,15 @@ const CreateUser = () => {
                                         })}
                                     />
                                     <div className='mt-1  ml-1' >
-                                        {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
-                                        {errors.password?.type === 'pattern' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
+                                        {errors.password?.type === 'required' && <span className="label-text text-xs-alt text-red-500">{errors.password.message}</span>}
+                                        {errors.password?.type === 'pattern' && <span className="label-text text-xs-alt text-red-500">{errors.password.message}</span>}
                                     </div>
                                 </div>
 
 
                                 <div className="form-control">
                                     <label className="label py-1 ">
-                                        <span className="label-text">Confirm Password</span>
+                                        <span className="label-text text-xs">Confirm Password</span>
                                     </label>
                                     <input className='input input-bordered' placeholder='Confirm Password' {...register("ConfirmPassword",
                                         {
@@ -121,8 +168,38 @@ const CreateUser = () => {
                                         })}
                                     />
                                     <div className="mt-1  ml-1">
-                                        {errors.ConfirmPassword?.type === 'required' && <span className="label-text-alt text-red-500">{errors.ConfirmPassword.message}</span>}
-                                        {errors.ConfirmPassword?.type === 'pattern' && <span className="label-text-alt text-red-500">{errors.ConfirmPassword.message}</span>}
+                                        {errors.ConfirmPassword?.type === 'required' && <span className="label-text text-xs-alt text-red-500">{errors.ConfirmPassword.message}</span>}
+                                        {errors.ConfirmPassword?.type === 'pattern' && <span className="label-text text-xs-alt text-red-500">{errors.ConfirmPassword.message}</span>}
+                                    </div>
+                                </div>
+
+                                <div className='' >
+
+
+
+                                    <div className="form-control">
+                                        <label className="label py-1 ">
+                                            <span className="label-text text-xs"> Photo</span>
+                                        </label>
+                                        <input className='pt-[8.5px] cursor-pointer input input-bordered 
+                                            block text-sm text-slate-500
+                                            file:mr-4 file:py-1 file:px-2
+                                            file:rounded-full file:border-0 file:cursor-pointer
+                                            file:text-sm file:font-semibold
+                                            file:bg-violet-50 file:text-violet-700
+                                            hover:file:bg-violet-100' type='file' {...register("photo",
+                                            {
+                                                required: {
+                                                    value: true,
+                                                    message: "Photo Password is required"
+                                                }
+
+                                            })}
+                                        />
+                                        <div className="mt-1  ml-1">
+                                            {errors.photo?.type === 'required' && <span className="label-text text-xs-alt text-red-500">{errors.photo.message}</span>}
+                                            {errors.photo?.type === 'pattern' && <span className="label-text text-xs-alt text-red-500">{errors.photo.message}</span>}
+                                        </div>
                                     </div>
                                 </div>
 

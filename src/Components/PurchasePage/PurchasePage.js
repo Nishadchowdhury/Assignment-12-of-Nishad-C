@@ -39,21 +39,6 @@ const PurchasePage = () => {
 
     }, [user, loadingUser, id])
 
-    // console.log(data);
-
-    const [image, Setimage] = useState({})
-
-    // const image = e => {
-    //     console.log(e.target.files);
-    // }
-
-
-    // const formData = new FormData();
-    // const fileField = document.querySelector('input[type="file"]');
-
-    // formData.append('username', 'abc123');
-    // formData.append('avatar', fileField.files[0]);
-
     const handleOrder = async e => {
         e.preventDefault()
         setLoadingOrder(true);
@@ -79,18 +64,13 @@ const PurchasePage = () => {
         };
 
 
-        // fetch(url, options)
-        //     .then(response => {
-        //         console.log(response.status);
-        //         e.target.reset()
-        //         setShowModal(false)
-        //         setLoadingOrder(false)
-        //     });
-
-
-
-
-        console.log('image', image);
+        fetch(url, options)
+            .then(response => {
+                console.log(response.status);
+                e.target.reset()
+                setShowModal(false)
+                setLoadingOrder(false)
+            });
     }
 
     if (loading || loadingUser) {
@@ -120,7 +100,7 @@ const PurchasePage = () => {
                     </div>
                 </div>
             </div>
-            {showModal && <OrderModal data={data} user={user} setLoadingOrder={setLoadingOrder} Setimage={Setimage} loadingOrder={loadingOrder} handleOrder={handleOrder} />}
+            {showModal && <OrderModal data={data} user={user} setLoadingOrder={setLoadingOrder} loadingOrder={loadingOrder} handleOrder={handleOrder} />}
         </div>
     );
 };

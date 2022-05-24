@@ -7,7 +7,7 @@ const UpComingProducts = () => {
             <div className="block hero-overlay bg-opacity-60"></div>
             <div className=" hero-content text-center text-neutral-content">
                 <div>
-                    <h1 className={` mb-16 ${headerClass} uppercase text-white opacity-75 `} > Our up-coming product </h1>
+                    <h1 className={` lg:mb-16 mb-4 ${headerClass} uppercase text-white opacity-75 `} > Our up-coming product </h1>
 
                     <div className=" ">
 

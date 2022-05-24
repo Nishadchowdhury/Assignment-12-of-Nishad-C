@@ -60,9 +60,9 @@ const OrderModal = ({ data, user, loadingOrder, setLoadingOrder, Setimage, handl
 
                                     <div class="form-control">
                                         <span className='text-xs text-white ml-2 mb-1 '> Your Photo (optional) </span>
-                                        <div className=' flex flex-row'>
-                                            <input type="text" name='Photo' placeholder="Photo Url" class=" w-1/2 input input-bordered" />
-                                            <input type="file" onChange={(e) => Setimage(e.target.files)} placeholder="email" class=" pt-[8.5px] cursor-pointer  w-1/2 input input-bordered 
+
+                                        <input type="text" name='Photo' placeholder="Photo Url" class=" input input-bordered" />
+                                        {/* <input type="file" onChange={(e) => Setimage(e.target.files)} placeholder="email" class=" pt-[8.5px] cursor-pointer  w-1/2 input input-bordered 
                                             block text-sm text-slate-500
                                             file:mr-4 file:py-1 file:px-2
                                             file:rounded-full file:border-0 file:cursor-pointer
@@ -70,8 +70,8 @@ const OrderModal = ({ data, user, loadingOrder, setLoadingOrder, Setimage, handl
                                             file:bg-violet-50 file:text-violet-700
                                             hover:file:bg-violet-100
 
-                                            " />
-                                        </div>
+                                            " /> */}
+
                                     </div>
 
                                     <div class="form-control">

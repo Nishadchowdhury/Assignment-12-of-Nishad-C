@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useAuthState, useSignInWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { useAuthState, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading/Loading';
@@ -12,15 +12,8 @@ const Login = () => {
         signInWithEmailAndPassword,
         user,
         loading,
-        errorCreate,
+        error,
     ] = useSignInWithEmailAndPassword(auth);
-
-    // onClick={async () => {
-    //     await updateProfile({ displayName, photoURL });
-    //     alert('Updated profile');
-    //   }}
-
-    const [updateProfile, updating, errorUpdate] = useUpdateProfile(auth);
 
     const navigate = useNavigate();
     const location = useLocation();
