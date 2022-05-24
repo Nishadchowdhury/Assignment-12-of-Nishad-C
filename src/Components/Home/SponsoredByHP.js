@@ -4,7 +4,7 @@ import { headerClass } from '../../Hooks/Classes';
 const SponsoredByHP = () => {
     return (
         // 
-        <div>
+        <div className='mt-5'>
 
             <h1 className={headerClass} > Sponsor ! </h1>
             <div className={`hero mt-5 shadow-2xl bg-right lg:bg-center bg-[url("https://i.ibb.co/3dtYvJ2/bg-of-Sponsored-by-Hp.jpg")] h-[400px]`} >

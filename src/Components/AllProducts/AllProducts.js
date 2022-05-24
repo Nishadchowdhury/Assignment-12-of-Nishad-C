@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import rootUrl from '../../Hooks/RootUrl';
 import Loading from '../Shared/Loading/Loading';
+import SingleCardAllP from './SingleCardAllP';
 
 const AllProducts = () => {
 
@@ -17,10 +18,12 @@ const AllProducts = () => {
     return (
 
         <div>
-            {
-                products.map(({ minimum, name, picture, price, quantity, description }, i) => <div> all products </div>)
-            }
-        </div >
+            <div className='flex flex-wrap gap-4 w-11/12 mx-auto ' >
+                {
+                    products.map((product, i) => <SingleCardAllP product={product} key={i} />)
+                }
+            </div >
+        </div>
     );
 };
 

@@ -4,7 +4,7 @@ import { headerClass } from '../../Hooks/Classes';
 const ClientsReview = () => {
     return (
         <div>
-            <h1 className={`${headerClass} mb-5 `} > Clients review </h1>
+            <h1 className={`${headerClass} mb-5 mt-5`} > Clients review </h1>
             <div className='w-4/5 mx-auto grid lg:grid-cols-3 grid-flow-row gap-4 ' >
 
                 <div className="stack ">

@@ -17,7 +17,7 @@ const PartsContainer = () => {
     }
     return (
 
-        <div>
+        <div className='mt-5'>
 
             <h1 className={headerClass}> Parts </h1>
             <div className='flex flex-col gap-4 mt-8 ' >

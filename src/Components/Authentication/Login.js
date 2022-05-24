@@ -1,18 +1,26 @@
 import React, { useEffect } from 'react';
-import { useAuthState, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useAuthState, useSignInWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading/Loading';
 import SocialLogin from './SocialLogin';
 
 const Login = () => {
+
+    const imageUploadKey = '157b3358fcb155f65d9ac95a3aaebff6'
     const [
         signInWithEmailAndPassword,
         user,
         loading,
-        error,
+        errorCreate,
     ] = useSignInWithEmailAndPassword(auth);
 
+    // onClick={async () => {
+    //     await updateProfile({ displayName, photoURL });
+    //     alert('Updated profile');
+    //   }}
+
+    const [updateProfile, updating, errorUpdate] = useUpdateProfile(auth);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -22,14 +30,20 @@ const Login = () => {
     const handleSubmit = e => {
         e.preventDefault()
 
-        signInWithEmailAndPassword(e.target.email.value, e.target.password.value)
+        // signInWithEmailAndPassword(e.target.email.value, e.target.password.value)
 
+        // handle
+
+        // console.log(e.target.);
 
     }
 
     if (user) {
         navigate(from, { replace: true });
     }
+
+
+
 
 
     useEffect(() => {

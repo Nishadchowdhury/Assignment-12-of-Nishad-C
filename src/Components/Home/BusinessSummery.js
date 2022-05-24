@@ -8,7 +8,7 @@ import countries from '../../Assets/Svg/countries.png'
 const BusinessSummery = () => {
     return (
         <div>
-            <h1 className={`${headerClass} text-6xl `} > Laparts Business <span className='text-white' > Trusts  </span> </h1>
+            <h1 className={`${headerClass} text-6xl mt-5`} > Laparts Business <span className='text-white' > Trusts  </span> </h1>
 
             <div className=' flex justify-center items-end lg:p-0 p-3 lg:h-[300px]'  >
                 <div className='mx-auto  lg:w-11/12 w-full   p-7 lg:p-0 mt-10 shadow-md shadow-white rounded-2xl ' >
