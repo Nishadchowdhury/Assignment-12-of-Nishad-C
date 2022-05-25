@@ -6,28 +6,34 @@ import { commonButton } from '../../Hooks/Classes';
 import rootUrl from '../../Hooks/RootUrl';
 import Loading from '../Shared/Loading/Loading';
 
-const PartsContainer = () => {
+const PartsContainer = ({ fetchData }) => {
 
+    const { product, isLoading, error } = fetchData;
 
-
-    const { data: product, isLoading, error } = useQuery('limitedDataForHome', () => fetch(`${rootUrl}/ProductsLimit?total=3`).then(res => res.json()));
 
     if (isLoading) {
-        return <Loading />
+        return <div className='min-h-[350px] max-h-[500px] flex justify-center items-center' >  <Loading /> </div>
     }
     return (
 
         <div className='mt-5'>
 
             <h1 className={headerClass}> Parts </h1>
+
             <div className='flex flex-col gap-4 mt-8 ' >
 
                 {product?.map(({ minimum, name, picture, price, quantity, description, _id }, i) =>
                     <div key={i} className="card lg:card-side bg-base-100 shadow-xl w-[80%] mx-auto ">
-                        <figure className='lg:h-80 lg:w-[40%]' ><img className='w-full' src={picture} alt="Album" /></figure>
+
+                        <figure className='lg:h-80 lg:w-[40%] relative' ><img className='w-full' src={picture} alt="Album" />
+                            {+quantity === 0 && <span className='bg-red-500 text-white px-2 py-1 absolute w-auto h-auto top-0 left-0 ' > Out Of Stoke </span>}
+                        </figure>
+
+
                         <div className="card-body border-[1px] lg:w-3/5 lg:border-l-0 lg:rounded-r-2xl">
                             <h2 className="card-title text-white opacity-90"> Item Name: {name}</h2>
-                            <h2 className="card-title text-white opacity-90 text-base "> Par Unite Cost: {price}$</h2>
+                            <h2 className="card-title text-white opacity-90 text-base "> in Stoke:  {quantity}$</h2>
+                            <h2 className="card-title text-white opacity-90 text-base "> Per Unite Cost: {price}$</h2>
                             <h2 className="card-title text-white opacity-90 text-base "> Minimum acceptable amount: {minimum} Piece</h2>
 
 

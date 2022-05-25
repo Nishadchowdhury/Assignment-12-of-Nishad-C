@@ -1,12 +1,13 @@
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import React from 'react';
+import React, { useState } from 'react';
 import rootUrl from '../../Hooks/RootUrl';
 import CheckOutForm from './CheckOutForm';
 
 const stripePromise = loadStripe('pk_test_51L1AKaFvzbbpnw6as8zL4ESyMeYTSLpi4fdgG8699CatvCDYs9NoRx2ZXoAripSGuC8F2kzHelz9qXGyhX9j6Rl800hYDmX1Fd');
 
-const Payment = ({ dataForPaymentModal, setDataForPaymentModal }) => {
+const Payment = ({ dataForPaymentModal, setDataForPaymentModal, refetch }) => {
+    const [loading, setLoading] = useState(false);
 
     const { picture, _id, Product, Quantity, price, userName } = dataForPaymentModal;
     const total = +price * +Quantity;
@@ -23,7 +24,11 @@ const Payment = ({ dataForPaymentModal, setDataForPaymentModal }) => {
                 <div class="modal-box w-11/12 max-w-5xl">
                     <div  >
                         <div class="modal-action mt-0">
-                            <label onClick={() => setDataForPaymentModal(null)} class="btn btn-md text-lg btn-circle  ">✕</label>
+                            <label
+                                onClick={() => setDataForPaymentModal(null)}
+                                class="btn btn-md text-lg btn-circle"
+                                disabled={loading}
+                            >✕</label>
                         </div>
                         <div className='flex justify-center items-center flex-col gap-12 ' >
 
@@ -39,7 +44,13 @@ const Payment = ({ dataForPaymentModal, setDataForPaymentModal }) => {
 
                             <div className='  shadow-2xl rounded-xl border-l-zinc-500 min-w-[450px] p-5 py-2 min-h-28' >
                                 <Elements stripe={stripePromise}>
-                                    <CheckOutForm dataForPaymentModal={dataForPaymentModal} />
+                                    <CheckOutForm
+                                        dataForPaymentModal={dataForPaymentModal} s
+                                        etDataForPaymentModal={setDataForPaymentModal}
+                                        setLoading={setLoading}
+                                        loading={loading}
+                                        refetch={refetch}
+                                    />
                                 </Elements>
                             </div>
 

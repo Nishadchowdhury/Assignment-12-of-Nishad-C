@@ -2,6 +2,9 @@ import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
 const Dashboard = () => {
+
+
+
     return (
         <div>
             <div class="drawer drawer-mobile">
@@ -16,9 +19,9 @@ const Dashboard = () => {
                     <label for="my-drawer-2" class="drawer-overlay"></label>
                     <ul class="menu  p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
                         {/* <!-- Sidebar content here --> */}
-                        <li> <NavLink to={'myOrders'} > MyOrders </NavLink> </li>
+                        {<li> <NavLink to={'myOrders'} > MyOrders </NavLink> </li>}
                         <li> <NavLink to={'myProfile'} > My Profile </NavLink> </li>
-                        <li> <NavLink to={'review'} > Review </NavLink> </li>
+                        {<li> <NavLink to={'review'} > Add a Review </NavLink> </li>}
 
 
 

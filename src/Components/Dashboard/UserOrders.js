@@ -2,10 +2,12 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useQuery } from 'react-query';
 import auth from '../../firebase.init';
 import rootUrl from '../../Hooks/RootUrl';
 import CheckOutForm from '../Payment/CheckOutForm';
 import Payment from '../Payment/Payment';
+import Loading from '../Shared/Loading/Loading';
 import CancelOrderModal from './CancelOrderModal';
 
 
@@ -18,12 +20,11 @@ const UserOrders = () => {
     const userName = user.displayName;
     const [userOrders, setUserOrders] = useState([]);
     const [dataForModal, setDataForModal] = useState(null);
-    const [refetch, setRefetch] = useState(null);
     const [dataForPaymentModal, setDataForPaymentModal] = useState(null);
 
     const url = `${rootUrl}/ordersByUser/${user?.email}`;
 
-    useEffect(() => {
+    const { data, isLoading, refetch } = useQuery("userUpdateing", () =>
 
         fetch(url, {
             method: "GET"
@@ -31,8 +32,8 @@ const UserOrders = () => {
             .then(res => res.json())
             .then(data => {
                 setUserOrders(data);
-            })
-    }, [refetch])
+            }))
+
 
 
     console.log(userOrders);
@@ -48,11 +49,12 @@ const UserOrders = () => {
     // picture: 
 
 
+    if (isLoading) { return <div className='flex justify-center items-center w-full' > <Loading />  </div> }
 
     return (
         <div>
-            <div class="overflow-x-auto">
-                <table class="table w-full ">
+            <div class="h-[100vh] lg:mt-28 ">
+                <table class="table relative w-full ">
 
                     <thead>
                         <tr>
@@ -67,7 +69,7 @@ const UserOrders = () => {
                     </thead>
                     <tbody>
                         {
-                            userOrders?.map(({ BuyerEmail, Product, Quantity, pricePerUnit, ProductId, picture, price, isPaid, _id }, i) =>
+                            userOrders?.map(({ BuyerEmail, Product, Quantity, pricePerUnit, ProductId, picture, price, isPaid, _id, transactionId }, i) =>
 
                                 <tr key={i} className='border-[1px] border-t-0 border-gray-700 ' >
                                     <th>{i + 1}</th>
@@ -98,6 +100,7 @@ const UserOrders = () => {
 
                                                 </div>
                                             }
+                                            {transactionId && <p className='text-xs text-start' > transactionId:- <br /> <span className='text-yellow-500 ' > {transactionId}</span></p>}
                                         </div>
 
                                     </td>
@@ -106,13 +109,15 @@ const UserOrders = () => {
                     </tbody>
                 </table>
 
-                {/* <Elements stripe={stripePromise}>
-                    <CheckOutForm />
-                </Elements> */}
-
             </div>
-            {dataForModal && <CancelOrderModal dataForModal={dataForModal} setRefetch={setRefetch} setDataForModal={setDataForModal} />}
-            {dataForPaymentModal && <Payment dataForPaymentModal={dataForPaymentModal} setDataForPaymentModal={setDataForPaymentModal} />}
+            {dataForModal && <CancelOrderModal
+                dataForModal={dataForModal}
+                refetch={refetch}
+                setDataForModal={setDataForModal} />}
+            {dataForPaymentModal && <Payment
+                refetch={refetch}
+                dataForPaymentModal={dataForPaymentModal}
+                setDataForPaymentModal={setDataForPaymentModal} />}
         </div>
     );
 };

@@ -2,12 +2,19 @@ import Navbar from './Components/Shared/Navbar/Navbar';
 import { Route, Routes } from 'react-router-dom';
 import { PublicRouts } from './Components/Routes/Public';
 import Loading from './Components/Shared/Loading/Loading';
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import RequireAuth from './Components/Authentication/RequireAuth';
 import { DashboardNested, ProtectedRoute } from './Components/Routes/ProtectedRoute';
 import Dashboard from './Components/Dashboard/Dashboard';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from './firebase.init';
+
+
+// const userContextFirebase = createContext([]);
 
 function App() {
+
+  // const [user, lading, error] = useAuthState(auth);
 
   const [ok, setOK] = useState(true);
 

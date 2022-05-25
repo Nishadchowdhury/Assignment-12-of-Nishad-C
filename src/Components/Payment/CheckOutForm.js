@@ -2,7 +2,7 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useEffect, useState } from 'react';
 import rootUrl from '../../Hooks/RootUrl';
 
-const CheckOutForm = ({ dataForPaymentModal }) => {
+const CheckOutForm = ({ dataForPaymentModal, setDataForPaymentModal, refetch, loading, setLoading }) => {
 
     const { picture, _id, Product, Quantity, price, userName } = dataForPaymentModal;
 
@@ -14,6 +14,7 @@ const CheckOutForm = ({ dataForPaymentModal }) => {
     const [clientSecret, setClientSecret] = useState('');
     const [successPay, setsuccessPay] = useState('');
     const [transactionId, setTransactionId] = useState('');
+
 
 
     useEffect(() => {
@@ -55,8 +56,11 @@ const CheckOutForm = ({ dataForPaymentModal }) => {
 
         });
 
+        setLoading(true);
+
+        console.log(true);
         if (error) {
-            setCardError(error.message || '');
+            return setCardError(error.message || '');
         }
 
         const { paymentIntent, error: intentError } = await stripe.confirmCardPayment(
@@ -78,6 +82,27 @@ const CheckOutForm = ({ dataForPaymentModal }) => {
         } else {
             setCardError('');
             setTransactionId(paymentIntent.id);
+
+            if (paymentIntent.id) {
+                const payData = {
+                    isPaid: true,
+                    transactionId: paymentIntent.id
+                }
+                await fetch(`${rootUrl}/ordersUpdate/${_id}`, {
+                    method: "PUT",
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(payData)
+                }).then(res => res.json())
+                    .then(data => {
+                        console.log(data)
+
+                        setLoading(false)
+                        refetch()
+                    })
+            }
+
             setsuccessPay('Congrats! your payment is completed')
         }
 
@@ -102,7 +127,7 @@ const CheckOutForm = ({ dataForPaymentModal }) => {
                     },
                 }}
             />
-            <button className='mt-7 btn btn-sm btn-success ' type="submit" disabled={!stripe || !clientSecret}>
+            <button className='mt-7 btn btn-sm btn-success ' type="submit" disabled={!stripe || !clientSecret || loading}>
                 Pay
             </button>
             {cardError && <p className='text-red-500 -mb-2 text-center'> {cardError} </p>}

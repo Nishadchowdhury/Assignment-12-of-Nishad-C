@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import rootUrl from '../../Hooks/RootUrl';
 
-const CancelOrderModal = ({ dataForModal, setRefetch, setDataForModal }) => {
+const CancelOrderModal = ({ dataForModal, setDataForModal }) => {
 
 
     const { picture, _id, Product } = dataForModal;
@@ -14,7 +14,6 @@ const CancelOrderModal = ({ dataForModal, setRefetch, setDataForModal }) => {
         }).then(res => res.json())
             .then(data => {
                 console.log(data)
-                setRefetch(_id)
                 setDataForModal(null);
             })
 

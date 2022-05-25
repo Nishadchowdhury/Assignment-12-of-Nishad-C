@@ -34,7 +34,7 @@ const Navbar = ({ children }) => {
                             </li>
 
                             {user && <li className='border-[1px] border-primary ml-2 rounded-lg'>
-                                <NavLink to='/dashboard' className='rounded-lg ' >Dashboard</NavLink>
+                                <NavLink to='/dashboard/myOrders' className={`rounded-lg ${location.includes('dashboard') && 'btn-primary text-white '}  `}  >Dashboard</NavLink>
                             </li>}
 
                             {user ? <li className='border-[1px] border-primary ml-2 rounded-lg'>
@@ -79,7 +79,7 @@ const Navbar = ({ children }) => {
                     </li>
 
                     {user && <li className='mt-2 '>
-                        <NavLink to='/dashboard' className='border-[1px] border-primary' >Dashboard</NavLink>
+                        <NavLink to='/dashboard/myOrders' className={`border-[1px] border-primary ${location.includes('dashboard') && 'btn-primary text-white '} `} >Dashboard</NavLink>
                     </li>}
                     {user ? <li className='mt-2'>
                         <button className='mt-2 border-[1px] border-primary ' onClick={() => signOut(auth)} >Log out</button>
