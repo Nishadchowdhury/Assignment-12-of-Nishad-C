@@ -1,9 +1,16 @@
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import rootUrl from '../../Hooks/RootUrl';
+import CheckOutForm from '../Payment/CheckOutForm';
 import Payment from '../Payment/Payment';
 import CancelOrderModal from './CancelOrderModal';
+
+
+const stripePromise = loadStripe('pk_test_51L1AKaFvzbbpnw6as8zL4ESyMeYTSLpi4fdgG8699CatvCDYs9NoRx2ZXoAripSGuC8F2kzHelz9qXGyhX9j6Rl800hYDmX1Fd');
+
 
 const UserOrders = () => {
 
@@ -94,15 +101,18 @@ const UserOrders = () => {
                                         </div>
 
                                     </td>
-                                </tr>
-
-                            )
+                                </tr>)
                         }
                     </tbody>
                 </table>
+
+                {/* <Elements stripe={stripePromise}>
+                    <CheckOutForm />
+                </Elements> */}
+
             </div>
             {dataForModal && <CancelOrderModal dataForModal={dataForModal} setRefetch={setRefetch} setDataForModal={setDataForModal} />}
-            {dataForPaymentModal && <Payment dataForPaymentModal={dataForPaymentModal} />}
+            {dataForPaymentModal && <Payment dataForPaymentModal={dataForPaymentModal} setDataForPaymentModal={setDataForPaymentModal} />}
         </div>
     );
 };
