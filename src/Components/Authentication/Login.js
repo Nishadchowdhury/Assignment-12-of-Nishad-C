@@ -8,6 +8,7 @@ import SocialLogin from './SocialLogin';
 const Login = () => {
 
     const imageUploadKey = '157b3358fcb155f65d9ac95a3aaebff6'
+
     const [
         signInWithEmailAndPassword,
         user,
@@ -23,11 +24,7 @@ const Login = () => {
     const handleSubmit = e => {
         e.preventDefault()
 
-        // signInWithEmailAndPassword(e.target.email.value, e.target.password.value)
-
-        // handle
-
-        // console.log(e.target.);
+        signInWithEmailAndPassword(e.target.email.value, e.target.password.value)
 
     }
 
@@ -72,13 +69,14 @@ const Login = () => {
                                     <label className="label">
                                         <span className="label-text">Password</span>
                                     </label>
-                                    <input name='password' required type="text" placeholder="password" className="input input-bordered" />
+                                    <input name='password' required type="password" placeholder="password" className="input input-bordered" />
                                     <div>
                                         <label className="label">
                                             <button className="label-text-alt link link-hover">Forgot password?</button>
                                         </label>
 
                                     </div>
+                                    {error && <p className='text-center -mt-1 -mb-6 text-red-500' > {error?.message} </p>}
                                 </div>
                                 <div className="form-control mt-6">
                                     <input type="submit" value="Login" className='btn btn-primary' />

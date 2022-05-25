@@ -22,7 +22,7 @@ const PartsContainer = () => {
             <h1 className={headerClass}> Parts </h1>
             <div className='flex flex-col gap-4 mt-8 ' >
 
-                {product.map(({ minimum, name, picture, price, quantity, description, _id }, i) =>
+                {product?.map(({ minimum, name, picture, price, quantity, description, _id }, i) =>
                     <div key={i} className="card lg:card-side bg-base-100 shadow-xl w-[80%] mx-auto ">
                         <figure className='lg:h-80 lg:w-[40%]' ><img className='w-full' src={picture} alt="Album" /></figure>
                         <div className="card-body border-[1px] lg:w-3/5 lg:border-l-0 lg:rounded-r-2xl">

@@ -38,7 +38,7 @@ const OrderModal = ({ data, user, loadingOrder, setLoadingOrder, Setimage, handl
                         <label for="orderModal" class="btn btn-sm btn-circle ">✕</label>
                     </div>
                     <div className=''>
-                        <div class="card mx-auto flex-shrink-0 max-w-sm shadow-2xl bg-base-100">
+                        <div class="card mx-auto flex-shrink-0 max-w-sm ">
 
                             <form onSubmit={handleOrder} >
                                 <div class="card-body py-0 px-0">
@@ -58,21 +58,7 @@ const OrderModal = ({ data, user, loadingOrder, setLoadingOrder, Setimage, handl
                                         <input type="text" name='Phone' required placeholder="Phone" class="input input-bordered" />
                                     </div>
 
-                                    <div class="form-control">
-                                        <span className='text-xs text-white ml-2 mb-1 '> Your Photo (optional) </span>
 
-                                        <input type="text" name='Photo' placeholder="Photo Url" class=" input input-bordered" />
-                                        {/* <input type="file" onChange={(e) => Setimage(e.target.files)} placeholder="email" class=" pt-[8.5px] cursor-pointer  w-1/2 input input-bordered 
-                                            block text-sm text-slate-500
-                                            file:mr-4 file:py-1 file:px-2
-                                            file:rounded-full file:border-0 file:cursor-pointer
-                                            file:text-sm file:font-semibold
-                                            file:bg-violet-50 file:text-violet-700
-                                            hover:file:bg-violet-100
-
-                                            " /> */}
-
-                                    </div>
 
                                     <div class="form-control">
                                         <span className='text-xs text-white ml-2 mb-1 '> Product Name </span>

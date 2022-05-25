@@ -46,12 +46,14 @@ const PurchasePage = () => {
         const order = {
             ProductId: _id,
             BuyerEmail: email,
+            price: price,
+            isPaid: false,
+            picture: picture,
             Name: e.target.Name.value,
             Address: e.target.Address.value,
             Phone: e.target.Phone.value,
             Product: e.target.Product.value,
-            Quantity: e.target.Quantity.value,
-            photoUrl: (e.target.Photo.value).includes('https') ? (e.target.Photo.value) : ("https://i.ibb.co/NZGnqZK/user-not-found.webp"),
+            Quantity: e.target.Quantity.value
         }
 
         const url = `${rootUrl}/addOrder`;

@@ -3,6 +3,7 @@ import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-fireb
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import auth from '../../firebase.init';
+import rootUrl from '../../Hooks/RootUrl';
 
 const CreateUser = () => {
 
@@ -22,22 +23,20 @@ const CreateUser = () => {
 
 
 
-    const imageUpKey = '3e71ee8402adb8ecc47756f4a172b7ea';
 
     const onSubmit = async data => {
         setError('');
 
+        const imageUpKey = '3e71ee8402adb8ecc47756f4a172b7ea';
         const { ConfirmPassword, email, password } = data;
 
         if (password !== ConfirmPassword) {
-            return setError('please Type Same password')
+            return setError('please Type Same password');
         }
-
-        // return console.log(data);
-
+        // console.log(data);
         const image = data.photo[0];
         const formData = new FormData();
-        formData.append('photo', image);
+        formData.append('image', image)
         const imageUrl = `https://api.imgbb.com/1/upload?key=${imageUpKey}`;
 
         fetch(imageUrl, {
@@ -47,18 +46,39 @@ const CreateUser = () => {
             .then(response => response.json())
             .then(result => {
                 console.log('Success:', result);
+
+                const photoURL = result.data.url;
+                const displayName = data.name;
+                (async () => {
+                    await createUserWithEmailAndPassword(email, password);
+                    await updateProfile({ displayName, photoURL });
+
+                    const userForDB = {
+                        UserName: displayName,
+                        UserEmail: email,
+                    }
+
+                    const url = `${rootUrl}/Login`;
+                    const options = {
+                        method: 'PUT',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify(userForDB)
+                    };
+
+                    fetch(url, options)
+                        .then(res => {
+                            console.log(res);
+                        });
+
+                })();
+
             })
 
-        // await createUserWithEmailAndPassword(email, password)
-
-        console.log(data);
-
-        if (user) {
-            const { displayName } = user;
-            // await updateProfile({ displayName, photoURL })
-        }
 
 
+        console.log(user);
         setError('');
     }
 
