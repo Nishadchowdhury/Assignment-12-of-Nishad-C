@@ -2,14 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import rootUrl from '../../Hooks/RootUrl';
+import Payment from '../Payment/Payment';
+import CancelOrderModal from './CancelOrderModal';
 
 const UserOrders = () => {
 
     const [user, loading] = useAuthState(auth)
-
+    const userName = user.displayName;
     const [userOrders, setUserOrders] = useState([]);
+    const [dataForModal, setDataForModal] = useState(null);
+    const [refetch, setRefetch] = useState(null);
+    const [dataForPaymentModal, setDataForPaymentModal] = useState(null);
 
     const url = `${rootUrl}/ordersByUser/${user?.email}`;
+
     useEffect(() => {
 
         fetch(url, {
@@ -19,7 +25,8 @@ const UserOrders = () => {
             .then(data => {
                 setUserOrders(data);
             })
-    }, [])
+    }, [refetch])
+
 
     console.log(userOrders);
 
@@ -53,9 +60,9 @@ const UserOrders = () => {
                     </thead>
                     <tbody>
                         {
-                            userOrders?.map(({ BuyerEmail, Product, Quantity, pricePerUnit, ProductId, picture, price, isPaid }, i) =>
+                            userOrders?.map(({ BuyerEmail, Product, Quantity, pricePerUnit, ProductId, picture, price, isPaid, _id }, i) =>
 
-                                <tr key={ProductId} className='border-[1px] border-t-0 border-gray-700 ' >
+                                <tr key={i} className='border-[1px] border-t-0 border-gray-700 ' >
                                     <th>{i + 1}</th>
                                     <td> <div class="avatar">
                                         <div class="w-24 mask mask-squircle">
@@ -70,9 +77,19 @@ const UserOrders = () => {
 
                                         <div>
                                             {isPaid ? <button class="btn btn-disabled btn-xs text-green-500 ">Paid </button> :
-                                                <div className='flex flex-col gap-2' >
-                                                    <button class="btn btn-xs btn-info ">Pay Now </button>
-                                                    <button class="btn btn-xs btn-error ">Cancel </button> </div>
+                                                <div className='flex flex-col gap-4' >
+                                                    <label
+                                                        for="payment-modal"
+                                                        class="btn btn-xs btn-info"
+                                                        onClick={() => setDataForPaymentModal({ picture, _id, Product, Quantity, price, userName })}
+                                                    >Pay Now </label>
+                                                    <label
+                                                        for="delete-order-modal"
+                                                        class="btn modal-button btn-xs btn-error"
+                                                        onClick={() => setDataForModal({ picture, _id, Product })}
+                                                    >Cancel Order</label>
+
+                                                </div>
                                             }
                                         </div>
 
@@ -84,6 +101,8 @@ const UserOrders = () => {
                     </tbody>
                 </table>
             </div>
+            {dataForModal && <CancelOrderModal dataForModal={dataForModal} setRefetch={setRefetch} setDataForModal={setDataForModal} />}
+            {dataForPaymentModal && <Payment dataForPaymentModal={dataForPaymentModal} />}
         </div>
     );
 };
