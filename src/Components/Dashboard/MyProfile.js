@@ -1,9 +1,10 @@
 import { async } from '@firebase/util';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSendEmailVerification } from 'react-firebase-hooks/auth';
 import { userContextFirebase } from '../../App';
 import auth from '../../firebase.init';
 import { commonButton } from '../../Hooks/Classes';
+import rootUrl from '../../Hooks/RootUrl';
 
 
 
@@ -19,6 +20,47 @@ const MyProfile = () => {
         window.alert(`message send check ${email}`)
     }
 
+    const [dbUser, setDbUser] = useState({})
+    useEffect(() => {
+
+        if (user?.email) {
+            fetch(`${rootUrl}/user/${user.email}`, {
+                method: "GET",
+                headers: {
+                    'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setDbUser(data);
+                })
+        }
+
+    }, [user, loading])
+
+    console.log('user', dbUser);
+
+    const handleUpdate = e => {
+        e.preventDefault()
+
+
+        const userForDB = {
+            education: e.target.education.value || '',
+            location: e.target.location.value || '',
+            phone: e.target.phone.value || '',
+            LinkedIn: e.target.LinkedIn.value || '',
+        }
+
+        const url = `${rootUrl}/Login/${email}`;
+        fetch(url, {
+            method: "PUT",
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(userForDB)
+        })
+    }
+
     console.log(sending);
 
     return (
@@ -26,13 +68,13 @@ const MyProfile = () => {
             <div className='flex justify-center mt-14' >
 
 
-                <div class="card  card-side bg-base-100 shadow-xl">
+                <div class="card lg:w-full card-side bg-base-100 shadow-xl border-[1px] border-slate-600">
                     <div class="avatar p-3 ">
-                        <div class="w-56  rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                            <img src={photoURL} alt="" />
+                        <div class="lg:w-56 lg:h-auto  w-10 h-10  rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                            <img className='' src={photoURL} alt="" />
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-2">
                         <h2 class="card-title">{displayName}</h2>
                         <p>{email}</p>
                         <div class="card-actions justify-end">
@@ -46,30 +88,44 @@ const MyProfile = () => {
                 </div>
             </div>
 
-            <div className='flex gap-10 w-full justify-center mt-9'  >
-                <div className='w-3/4 flex justify-center gap-9' >
-                    <input type="text" placeholder="Type here" class="input input-bordered w-full  flex-1" />
-                    <button className={commonButton} > update </button>
+            {/* LinkedIn: ""
+            UserEmail: "a@a.com"
+            education: "HSC 2021"
+            location: "Cumilla "
+            phone */}
+
+            <form onSubmit={handleUpdate} className='lg:w-5/6 w-full' >
+
+                <div className='flex gap-10 w-full justify-center mt-9'  >
+                    <div className='w-3/4 flex justify-center gap-9' >
+
+                        <input name='education' defaultValue={dbUser?.education} type="text" placeholder="your education" class={` text-white input input-bordered w-full  flex-1`} />
+
+                    </div>
                 </div>
-            </div>
-            <div className='flex gap-10 w-full justify-center mt-9'  >
-                <div className='w-3/4 flex justify-center gap-9' >
-                    <input type="text" placeholder="Type here" class="input input-bordered w-full  flex-1" />
-                    <button className={commonButton} > update </button>
+                <div className='flex gap-10 w-full justify-center mt-9'  >
+                    <div className='w-3/4 flex justify-center gap-9' >
+
+                        <input name='location' defaultValue={dbUser?.location} type="text" placeholder="your location" class={` text-white input input-bordered w-full  flex-1`} />
+
+                    </div>
                 </div>
-            </div>
-            <div className='flex gap-10 w-full justify-center mt-9'  >
-                <div className='w-3/4 flex justify-center gap-9' >
-                    <input type="text" placeholder="Type here" class="input input-bordered w-full  flex-1" />
-                    <button className={commonButton} > update </button>
+                <div className='flex gap-10 w-full justify-center mt-9'  >
+                    <div className='w-3/4 flex justify-center gap-9' >
+
+                        <input name='phone' typ defaultValue={dbUser?.phone} e="text" placeholder="your phone number" class={` text-white input input-bordered w-full  flex-1`} />
+
+                    </div>
                 </div>
-            </div>
-            <div className='flex gap-10 w-full justify-center mt-9'  >
-                <div className='w-3/4 flex justify-center gap-9' >
-                    <input type="text" placeholder="Type here" class="input input-bordered w-full  flex-1" />
-                    <button className={commonButton} > update </button>
+                <div className='flex gap-10 w-full justify-center mt-9'  >
+                    <div className='w-3/4 flex justify-center gap-9' >
+
+                        <input name='LinkedIn' defaultValue={dbUser?.LinkedIn} type="text" placeholder="your LinkedIn" class={` text-white input input-bordered w-full  flex-1`} />
+                        <button className={commonButton} > update </button>
+                    </div>
                 </div>
-            </div>
+
+            </form>
 
         </div>
     );

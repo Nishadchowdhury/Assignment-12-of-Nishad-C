@@ -8,6 +8,8 @@ import { DashboardNested, ProtectedRoute } from './Components/Routes/ProtectedRo
 import Dashboard from './Components/Dashboard/Dashboard';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from './firebase.init';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const userContextFirebase = createContext('amar');
@@ -59,9 +61,10 @@ function App() {
 
 
 
-
+          <ToastContainer />
 
         </Navbar>
+
       </div>
     </userContextFirebase.Provider>
   );

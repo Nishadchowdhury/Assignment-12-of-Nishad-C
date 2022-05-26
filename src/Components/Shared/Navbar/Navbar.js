@@ -7,7 +7,6 @@ import lightLogo from "../../../Assets/SiteLogoGif/Laparts.com Dark.gif"
 import auth from "../../../firebase.init";
 
 const Navbar = ({ children }) => {
-
     const [user, loading, error] = useContext(userContextFirebase);
 
     const data = useContext(userContextFirebase)
