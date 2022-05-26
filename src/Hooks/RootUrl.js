@@ -1,2 +1,2 @@
-const rootUrl = "http://localhost:5000";
+const rootUrl = "https://laparts-a12-nishad-server.herokuapp.com/";
 export default rootUrl;
