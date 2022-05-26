@@ -1,16 +1,28 @@
 import { signOut } from "firebase/auth";
+import { useContext } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { NavLink, useLocation } from "react-router-dom";
+import { userContextFirebase } from "../../../App";
 import lightLogo from "../../../Assets/SiteLogoGif/Laparts.com Dark.gif"
 import auth from "../../../firebase.init";
 
 const Navbar = ({ children }) => {
 
-    const [user, loading, error] = useAuthState(auth);
+    const [user, loading, error] = useContext(userContextFirebase);
+
+    const data = useContext(userContextFirebase)
+
+    console.log('120', data);
 
     const location = useLocation().pathname;
 
     console.log(location);
+
+
+    const handleSignOut = () => {
+        localStorage.removeItem("accessToken");
+        signOut(auth)
+    }
 
     return (
         <div className="drawer drawer-end ">
@@ -34,11 +46,11 @@ const Navbar = ({ children }) => {
                             </li>
 
                             {user && <li className='border-[1px] border-primary ml-2 rounded-lg'>
-                                <NavLink to='/dashboard/myOrders' className={`rounded-lg ${location.includes('dashboard') && 'btn-primary text-white '}  `}  >Dashboard</NavLink>
+                                <NavLink to='/dashboard/myProfile' className={`rounded-lg ${location.includes('dashboard') && 'btn-primary text-white '}  `}  >Dashboard</NavLink>
                             </li>}
 
                             {user ? <li className='border-[1px] border-primary ml-2 rounded-lg'>
-                                <button className='rounded-lg ' onClick={() => signOut(auth)}  >Log out</button>
+                                <button className='rounded-lg ' onClick={handleSignOut}  >Log out</button>
                             </li> : <li className='border-[1px] border-primary ml-2 rounded-lg'>
                                 <NavLink to='/login' className='rounded-lg ' >Login</NavLink>
                             </li>}
@@ -79,10 +91,10 @@ const Navbar = ({ children }) => {
                     </li>
 
                     {user && <li className='mt-2 '>
-                        <NavLink to='/dashboard/myOrders' className={`border-[1px] border-primary ${location.includes('dashboard') && 'btn-primary text-white '} `} >Dashboard</NavLink>
+                        <NavLink to='/dashboard/myProfile' className={`border-[1px] border-primary ${location.includes('dashboard') && 'btn-primary text-white '} `} >Dashboard</NavLink>
                     </li>}
                     {user ? <li className='mt-2'>
-                        <button className='mt-2 border-[1px] border-primary ' onClick={() => signOut(auth)} >Log out</button>
+                        <button className='mt-2 border-[1px] border-primary ' onClick={handleSignOut} >Log out</button>
                     </li> : <li className='mt-2'>
                         <NavLink to='/login' className='mt-2 border-[1px] border-primary ' >Login</NavLink>
                     </li>}

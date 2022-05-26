@@ -1,15 +1,38 @@
-import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { userContextFirebase } from '../../App';
+import rootUrl from '../../Hooks/RootUrl';
 
 const Dashboard = () => {
 
+    const location = useLocation().pathname;
+    const [user, loading, error] = useContext(userContextFirebase);
 
+    const [dbUser, setDbUser] = useState({})
+    useEffect(() => {
+
+        if (user?.email) {
+            fetch(`${rootUrl}/user/${user.email}`, {
+                method: "GET",
+                headers: {
+                    'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setDbUser(data);
+                })
+        }
+
+    }, [user, loading])
+
+    console.log(dbUser);
 
     return (
         <div>
             <div class="drawer drawer-mobile">
                 <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-                <div class="drawer-content flex flex-col items-center justify-center">
+                <div class={`drawer-content ${!location.includes('/dashboard/myProfile') && ""}`}>
                     {/* <!-- Page content here --> */}
 
                     <Outlet />
@@ -19,12 +42,9 @@ const Dashboard = () => {
                     <label for="my-drawer-2" class="drawer-overlay"></label>
                     <ul class="menu  p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
                         {/* <!-- Sidebar content here --> */}
-                        {<li> <NavLink to={'myOrders'} > MyOrders </NavLink> </li>}
                         <li> <NavLink to={'myProfile'} > My Profile </NavLink> </li>
-                        {<li> <NavLink to={'review'} > Add a Review </NavLink> </li>}
-
-
-
+                        {dbUser?.role !== 'Admin' && <li> <NavLink to={'myOrders'} > MyOrders </NavLink> </li>}
+                        {dbUser?.role !== 'Admin' && <li> <NavLink to={'review'} > Add a Review </NavLink> </li>}
                     </ul>
 
                 </div>

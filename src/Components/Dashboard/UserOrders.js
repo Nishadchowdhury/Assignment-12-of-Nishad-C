@@ -1,8 +1,9 @@
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useQuery } from 'react-query';
+import { userContextFirebase } from '../../App';
 import auth from '../../firebase.init';
 import rootUrl from '../../Hooks/RootUrl';
 import CheckOutForm from '../Payment/CheckOutForm';
@@ -11,12 +12,9 @@ import Loading from '../Shared/Loading/Loading';
 import CancelOrderModal from './CancelOrderModal';
 
 
-const stripePromise = loadStripe('pk_test_51L1AKaFvzbbpnw6as8zL4ESyMeYTSLpi4fdgG8699CatvCDYs9NoRx2ZXoAripSGuC8F2kzHelz9qXGyhX9j6Rl800hYDmX1Fd');
-
-
 const UserOrders = () => {
 
-    const [user, loading] = useAuthState(auth)
+    const [user, loading, error] = useContext(userContextFirebase);
     const userName = user.displayName;
     const [userOrders, setUserOrders] = useState([]);
     const [dataForModal, setDataForModal] = useState(null);
@@ -27,7 +25,10 @@ const UserOrders = () => {
     const { data, isLoading, refetch } = useQuery("userUpdateing", () =>
 
         fetch(url, {
-            method: "GET"
+            method: "GET",
+            headers: {
+                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            }
         })
             .then(res => res.json())
             .then(data => {
@@ -53,7 +54,7 @@ const UserOrders = () => {
 
     return (
         <div>
-            <div class="h-[100vh] lg:mt-28 ">
+            <div class=" mb-36">
                 <table class="table relative w-full ">
 
                     <thead>

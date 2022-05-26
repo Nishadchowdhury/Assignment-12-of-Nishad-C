@@ -10,11 +10,13 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from './firebase.init';
 
 
-// const userContextFirebase = createContext([]);
+export const userContextFirebase = createContext('amar');
 
 function App() {
 
-  // const [user, lading, error] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
+
+  const data = [user, loading, error]
 
   const [ok, setOK] = useState(true);
 
@@ -22,42 +24,46 @@ function App() {
     setOK(false)
   }, 10);
 
-  if (ok) {
+  if (ok || loading) {
     return <div className="h-screen"><Loading /></div>
   }
 
+
   return (
-    <div className='max-w-[100rem] mx-auto '>
-      <Navbar>
+    <userContextFirebase.Provider value={[user, loading, error]}>
 
-        {/* PublicRouts */}
-        <Routes>
-          {
-            PublicRouts.map(({ path, Component }, i) => <Route key={i} path={path} element={<Component />} ></Route>)
-          }
+      <div className='max-w-[100rem] mx-auto '>
+        <Navbar>
 
-          {/* ProtectedRoute */}
-          <Route element={<RequireAuth />} >
+          {/* PublicRouts */}
+          <Routes>
             {
-              ProtectedRoute.map(({ path, Component }, i) => <Route key={i} path={path} element={<Component />} ></Route>)
+              PublicRouts.map(({ path, Component }, i) => <Route key={i} path={path} element={<Component />} ></Route>)
             }
-          </Route>
 
-
-          <Route element={<RequireAuth />} >
-            <Route path='/dashboard' element={<Dashboard />}>
-              {DashboardNested.map(({ path, Component }, i) => <Route key={i} path={path} element={<Component />} ></Route>)}
+            {/* ProtectedRoute */}
+            <Route element={<RequireAuth />} >
+              {
+                ProtectedRoute.map(({ path, Component }, i) => <Route key={i} path={path} element={<Component />} ></Route>)
+              }
             </Route>
-          </Route>
-
-        </Routes>
 
 
+            <Route element={<RequireAuth />} >
+              <Route path='/dashboard' element={<Dashboard />}>
+                {DashboardNested.map(({ path, Component }, i) => <Route key={i} path={path} element={<Component />} ></Route>)}
+              </Route>
+            </Route>
+
+          </Routes>
 
 
 
-      </Navbar>
-    </div>
+
+
+        </Navbar>
+      </div>
+    </userContextFirebase.Provider>
   );
 }
 

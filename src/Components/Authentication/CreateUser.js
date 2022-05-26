@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import rootUrl from '../../Hooks/RootUrl';
+import useTokenJWT from '../../Hooks/useTokenJWT';
 
 const CreateUser = () => {
 
@@ -11,8 +12,6 @@ const CreateUser = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-
-    const [updateProfile, updating, errorUpdate] = useUpdateProfile(auth);
     const [
         createUserWithEmailAndPassword,
         user,
@@ -20,8 +19,9 @@ const CreateUser = () => {
         errorCreate,
     ] = useCreateUserWithEmailAndPassword(auth);
 
+    const [updateProfile, updating, errorUpdate] = useUpdateProfile(auth);
 
-
+    const [token] = useTokenJWT(user);
 
 
     const onSubmit = async data => {
@@ -53,25 +53,6 @@ const CreateUser = () => {
                     await createUserWithEmailAndPassword(email, password);
                     await updateProfile({ displayName, photoURL });
 
-                    const userForDB = {
-                        UserName: displayName,
-                        UserEmail: email,
-                    }
-
-                    const url = `${rootUrl}/Login`;
-                    const options = {
-                        method: 'PUT',
-                        headers: {
-                            'content-type': 'application/json'
-                        },
-                        body: JSON.stringify(userForDB)
-                    };
-
-                    fetch(url, options)
-                        .then(res => {
-                            console.log(res);
-                        });
-
                 })();
 
             })
@@ -90,7 +71,10 @@ const CreateUser = () => {
         setError('');
     }, [errorCreate, loading, user])
 
-    console.log(error);
+
+    if (token) {
+        return <Navigate to="/" />;
+    }
 
     return (
         <div>

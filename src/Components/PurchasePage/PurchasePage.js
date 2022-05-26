@@ -1,8 +1,9 @@
 import { async } from '@firebase/util';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useQuery } from 'react-query';
 import { Link, useLocation } from 'react-router-dom';
+import { userContextFirebase } from '../../App';
 import auth from '../../firebase.init';
 import { commonButton } from '../../Hooks/Classes';
 import rootUrl from '../../Hooks/RootUrl';
@@ -11,9 +12,11 @@ import OrderModal from './OrderModal';
 
 const PurchasePage = () => {
     // disabled={!this.state.value}
-
     const id = useLocation().pathname.split('/')[2];
-    const [user, loadingUser] = useAuthState(auth);
+    // const [user, loadingUser] = useAuthState(auth);
+
+    const [user, loadingUser, error] = useContext(userContextFirebase);
+
     const { displayName, email, phoneNumber, photoURL } = user;
 
     const [loading, setLoading] = useState(false);
@@ -76,7 +79,8 @@ const PurchasePage = () => {
                 const option = {
                     method: "PUT",
                     headers: {
-                        'content-type': 'application/json'
+                        'content-type': 'application/json',
+                        authorization: `Bearer ${localStorage.getItem('accessToken')}`
                     },
                     body: JSON.stringify({
                         quantity: +quantity - +order.Quantity,

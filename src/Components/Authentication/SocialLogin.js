@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSignInWithFacebook, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { Navigate } from 'react-router-dom';
 import auth from '../../firebase.init';
+import useTokenJWT from '../../Hooks/useTokenJWT';
 import Loading from '../Shared/Loading/Loading';
 
 
@@ -10,6 +12,9 @@ const SocialLogin = () => {
 
     const [signInWithGoogle, userG, loadingG, errorG] = useSignInWithGoogle(auth);
     const [signInWithFacebook, userF, loadingF, errorF] = useSignInWithFacebook(auth);
+
+    const [token] = useTokenJWT(userF || userG);
+
 
 
     useEffect(() => {
@@ -30,6 +35,10 @@ const SocialLogin = () => {
 
     if (loadingG || loadingF) {
         return <div className="h-16 overflow-hidden"> <Loading /> </div>
+    }
+
+    if (token) {
+        return <Navigate to="/" />;
     }
 
     return (

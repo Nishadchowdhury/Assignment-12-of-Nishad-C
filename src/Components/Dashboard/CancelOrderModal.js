@@ -10,7 +10,10 @@ const CancelOrderModal = ({ dataForModal, setDataForModal }) => {
 
 
         fetch(`${rootUrl}/deleteMyOrder/${_id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            }
         }).then(res => res.json())
             .then(data => {
                 console.log(data)

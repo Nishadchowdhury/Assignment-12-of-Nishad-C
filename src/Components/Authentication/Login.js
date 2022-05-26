@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { useAuthState, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
+import useTokenJWT from '../../Hooks/useTokenJWT';
 import Loading from '../Shared/Loading/Loading';
 import SocialLogin from './SocialLogin';
 
@@ -28,25 +29,12 @@ const Login = () => {
 
     }
 
-    if (user) {
+    const [token] = useTokenJWT(user)
+
+    if (token) {
         navigate(from, { replace: true });
     }
 
-
-
-
-
-    useEffect(() => {
-
-
-
-    }, [])
-
-    // if (Loading) {
-    //     return <div className='h-screen' > <Loading />  </div>
-    // }
-
-    // console.log(user);
 
     return (
         <div>
