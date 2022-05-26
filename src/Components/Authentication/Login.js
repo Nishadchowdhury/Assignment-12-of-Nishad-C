@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import React, { useEffect, useState } from 'react';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 import useTokenJWT from '../../Hooks/useTokenJWT';
 import Loading from '../Shared/Loading/Loading';
 import SocialLogin from './SocialLogin';
 
 const Login = () => {
-
     const imageUploadKey = '157b3358fcb155f65d9ac95a3aaebff6'
 
+    const [sendPasswordResetEmail, sending, errorReset] = useSendPasswordResetEmail(
+        auth
+    );
+    const [email, setEmail] = useState('');
     const [
         signInWithEmailAndPassword,
         user,
@@ -35,6 +39,20 @@ const Login = () => {
         navigate(from, { replace: true });
     }
 
+    const handlePassReset = async () => {
+
+        if (email) {
+            await sendPasswordResetEmail("email");
+            toast.success(`check reset message on ${email}`)
+            return
+        }
+
+        window.alert('please put a valid email ')
+
+    }
+
+
+
 
     return (
         <div>
@@ -51,7 +69,9 @@ const Login = () => {
                                     <label className="label">
                                         <span className="label-text">Email</span>
                                     </label>
-                                    <input name='email' required type="text" placeholder="email" className="input input-bordered" />
+                                    <input
+                                        onBlur={(e) => setEmail(e.target.value)}
+                                        name='email' required type="text" placeholder="email" className="input input-bordered" />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
@@ -60,7 +80,7 @@ const Login = () => {
                                     <input name='password' required type="password" placeholder="password" className="input input-bordered" />
                                     <div>
                                         <label className="label">
-                                            <button className="label-text-alt link link-hover">Forgot password?</button>
+                                            <button onClick={handlePassReset} type='button' className="label-text-alt link link-hover">Forgot password?</button>
                                         </label>
 
                                     </div>

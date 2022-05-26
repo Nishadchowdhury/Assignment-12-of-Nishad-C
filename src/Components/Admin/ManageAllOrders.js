@@ -1,3 +1,4 @@
+import { async } from '@firebase/util';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
@@ -22,32 +23,48 @@ const ManageAllOrders = () => {
             })
     })
 
-
-
-
     console.log(orders);
 
-    const handleDelete = e => {
+    const handlePaid = async (e) => {
 
         const EveryThingOk = window.confirm('are you sure to delete ?')
-
-
         if (EveryThingOk) {
 
-            fetch(`${rootUrl}/deleteMyOrder/${e}`, {
-                method: "DELETE",
+            const payData = {
+                isPaid: true,
+            }
+            await fetch(`${rootUrl}/ordersUpdate/${e}`, {
+                method: "PUT",
                 headers: {
-                    'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-                }
+                    'content-type': 'application/json'
+
+                },
+                body: JSON.stringify(payData)
             }).then(res => res.json())
                 .then(data => {
                     console.log(data)
-                    toast.success('ordre deleted successfully');
                     refetch()
                 })
-
         }
 
+    }
+
+    const handleShipped = e => {
+
+        const Shipped = { Shipped: true }
+
+        fetch(`${rootUrl}/updateShipped/${e}`, {
+            method: "PUT",
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify(Shipped)
+        }).then(res => res.json())
+            .then(data => {
+                console.log(data);
+                refetch()
+            })
 
     }
 
@@ -70,7 +87,7 @@ const ManageAllOrders = () => {
                     <tbody>
 
                         {
-                            orders?.map(({ BuyerEmail, Product, Quantity, pricePerUnit, ProductId, picture, price, isPaid, _id, transactionId }, i) =>
+                            orders?.map(({ BuyerEmail, Product, Quantity, pricePerUnit, ProductId, picture, price, isPaid, _id, Shipped, transactionId }, i) =>
 
                                 <tr key={i} className='border-[1px] border-t-0 border-gray-700 ' >
                                     <th>{i + 1}</th>
@@ -86,13 +103,15 @@ const ManageAllOrders = () => {
                                     <td>
 
                                         <div>
-                                            {isPaid ? <button class="btn btn-disabled btn-xs text-green-500 ">Paid </button> :
+                                            {isPaid ? <> {!Shipped && <button class="btn btn-disabled btn-xs text-orange-500 ">Pending...  </button>}
+                                                <button class={`btn btn-xs text-green-500 ${Shipped && 'btn-disabled'} `} onClick={() => handleShipped(_id)} >{!Shipped ? "Shipped  now " : "Shipped"}  </button> </> :
                                                 <div className='flex flex-col gap-4' >
+                                                    <button class="btn btn-disabled btn-xs text-red-500 ">Unpaid </button>
                                                     <label
                                                         for="delete-order-modal"
-                                                        class="btn modal-button btn-xs btn-error"
-                                                        onClick={() => handleDelete(_id)}
-                                                    >Delete Order</label>
+                                                        class="btn modal-button btn-xs btn-warning"
+                                                        onClick={() => handlePaid(_id)}
+                                                    >Make paid</label>
 
                                                 </div>
                                             }

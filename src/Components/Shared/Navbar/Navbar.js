@@ -52,6 +52,10 @@ const Navbar = ({ children }) => {
                             <li className='border-[1px] border-primary ml-2 rounded-lg'>
                                 <NavLink to='/Blogs' className='rounded-lg ' >Blogs</NavLink>
                             </li>
+
+                            <li className='border-[1px] border-primary ml-2 rounded-lg'>
+                                <NavLink to='/myPortfolio' className='rounded-lg ' >My Portfolio</NavLink>
+                            </li>
                             {user ? <li className='border-[1px] border-primary ml-2 rounded-lg'>
                                 <button className='rounded-lg ' onClick={handleSignOut}  >Log out</button>
                             </li> : <li className='border-[1px] border-primary ml-2 rounded-lg'>
