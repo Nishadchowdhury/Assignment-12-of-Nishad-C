@@ -10,6 +10,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from './firebase.init';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AdminRouts } from './Components/Routes/AdminRouts';
 
 
 export const userContextFirebase = createContext('amar');
@@ -54,6 +55,7 @@ function App() {
             <Route element={<RequireAuth />} >
               <Route path='/dashboard' element={<Dashboard />}>
                 {DashboardNested.map(({ path, Component }, i) => <Route key={i} path={path} element={<Component />} ></Route>)}
+                {AdminRouts.map(({ path, Component }, i) => <Route key={i} path={path} element={<Component />} ></Route>)}
               </Route>
             </Route>
 

@@ -3,7 +3,7 @@ import MakeAnAdmin from "../Admin/MakeAnAdmin";
 import ManageAllOrders from "../Admin/ManageAllOrders";
 import ManageProducts from "../Admin/ManageProducts";
 
-const AdminRouts = [
+export const AdminRouts = [
     { name: 'home', path: 'AddaProduct', Component: AddaProduct },
     { name: 'home', path: 'MakeAnAdmin', Component: MakeAnAdmin },
     { name: 'home', path: 'ManageProducts', Component: ManageProducts },

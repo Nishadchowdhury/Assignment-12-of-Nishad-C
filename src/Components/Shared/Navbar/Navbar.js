@@ -24,12 +24,12 @@ const Navbar = ({ children }) => {
     }
 
     return (
-        <div className="drawer drawer-end ">
+        <div className="drawer drawer-end  ">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col">
                 {/* <!-- Navbar --> */}
                 <div className="w-full navbar bg-base-300 ">
-                    <div className="flex-1 px-2 mx-2 h-16 "><img className="h-full " src={lightLogo} alt="" />
+                    <div className="flex-1 px-2 mx-2 h-16 rounded-2xl "><img className="h-full   rounded-2xl" src={lightLogo} alt="" />
                         {location.includes('/dashboard') && <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden"> <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg></label>}
                     </div>
 
@@ -44,10 +44,14 @@ const Navbar = ({ children }) => {
                                 <NavLink to='/' className='rounded-lg ' >Home</NavLink>
                             </li>
 
+
+
                             {user && <li className='border-[1px] border-primary ml-2 rounded-lg'>
                                 <NavLink to='/dashboard/myProfile' className={`rounded-lg ${location.includes('dashboard') && 'btn-primary text-white '}  `}  >Dashboard</NavLink>
                             </li>}
-
+                            <li className='border-[1px] border-primary ml-2 rounded-lg'>
+                                <NavLink to='/Blogs' className='rounded-lg ' >Blogs</NavLink>
+                            </li>
                             {user ? <li className='border-[1px] border-primary ml-2 rounded-lg'>
                                 <button className='rounded-lg ' onClick={handleSignOut}  >Log out</button>
                             </li> : <li className='border-[1px] border-primary ml-2 rounded-lg'>
@@ -78,7 +82,7 @@ const Navbar = ({ children }) => {
 
                         </div>
                         <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 rounded-2xl" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
                         </label>
                     </div>
                     <li className='mt-2 ' >

@@ -84,7 +84,7 @@ const AddReview = () => {
 
 
                 {
-                    reviews.map(({ rating, text, userEmail, userImg, userName }, i) =>
+                    reviews?.map(({ rating, text, userEmail, userImg, userName }, i) =>
 
                         <div key={i} class="card w-96 bg-base-100 shadow-xl border-[1px] border-slate-500">
                             <div class="card-body  ">

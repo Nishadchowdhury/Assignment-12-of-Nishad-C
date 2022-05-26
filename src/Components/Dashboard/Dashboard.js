@@ -47,10 +47,10 @@ const Dashboard = () => {
                         {dbUser?.role !== 'Admin' && <li> <NavLink to={'myOrders'} > MyOrders </NavLink> </li>}
                         {dbUser?.role !== 'Admin' && <li> <NavLink to={'review'} > Add a Review </NavLink> </li>}
 
-                        {dbUser?.role === 'Admin' && <li> <NavLink to={'myOrders'}> Add a Product </NavLink> </li>}
-                        {dbUser?.role === 'Admin' && <li> <NavLink to={'review'} > Manage all Orders </NavLink> </li>}
-                        {dbUser?.role === 'Admin' && <li> <NavLink to={'myOrders'}> Make an Admin </NavLink> </li>}
-                        {dbUser?.role === 'Admin' && <li> <NavLink to={'review'} > Manage Products </NavLink> </li>}
+                        {dbUser?.role === 'Admin' && <li> <NavLink to={'AddaProduct'}> Add a Product </NavLink> </li>}
+                        {dbUser?.role === 'Admin' && <li> <NavLink to={'ManageAllOrders'} > Manage all Orders </NavLink> </li>}
+                        {dbUser?.role === 'Admin' && <li> <NavLink to={'MakeAnAdmin'}> Make an Admin </NavLink> </li>}
+                        {dbUser?.role === 'Admin' && <li> <NavLink to={'ManageProducts'} > Manage Products </NavLink> </li>}
                     </ul>
 
                 </div>
