@@ -56,10 +56,6 @@ const CreateUser = () => {
                 })();
 
             })
-
-
-
-        console.log(user);
         setError('');
     }
 
@@ -79,8 +75,8 @@ const CreateUser = () => {
     return (
         <div>
 
-            <div className="hero min-h-screen bg-base-200">
-                <div className="hero-content flex-col lg:flex-row-reverse">
+            <div className="flex items-start pt-10 justify-center min-h-screen bg-base-200">
+                <div className="flex-col lg:flex-row-reverse">
 
                     <div className="card w-96 flex-shrink-0  max-w-sm shadow-2xl bg-base-100">
                         <div className="card-body">
@@ -208,7 +204,7 @@ const CreateUser = () => {
                                 </div>
 
 
-                                <div  >  <input className='btn btn-primary mx-auto block mt-7' type="submit" value={'Submit'} /></div>
+                                <div className='' >  <input className='btn w-full btn-primary mx-auto block mt-7  input-bordered' type="submit" value={'Submit'} /></div>
                             </form>
 
                             {error && <span className=" text-red-500 text-center mb-[-10px] ">{error}</span>}

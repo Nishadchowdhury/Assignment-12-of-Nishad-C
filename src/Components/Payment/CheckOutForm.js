@@ -52,8 +52,6 @@ const CheckOutForm = ({ dataForPaymentModal, setDataForPaymentModal, refetch, lo
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card,
-
-
         });
 
         setLoading(true);
@@ -110,7 +108,7 @@ const CheckOutForm = ({ dataForPaymentModal, setDataForPaymentModal, refetch, lo
     }
 
     return (
-        <form className=' p-3 ' onSubmit={handleSubmit}>
+        <form className=' p-3  ' onSubmit={handleSubmit}>
             <CardElement
                 options={{
                     style: {

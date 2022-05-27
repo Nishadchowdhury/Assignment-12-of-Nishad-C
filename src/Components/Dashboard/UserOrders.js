@@ -54,63 +54,64 @@ const UserOrders = () => {
 
     return (
         <div>
-            <div class=" mb-36">
-                <table class="table relative w-full ">
+            {!userOrders.length ? <div className='flex justify-center items-center w-auto'> <span className='text-red-500 text-4xl lg:text-6xl mt-72' >No Order Yet .</span> </div> :
+                <div class=" mb-36">
+                    <table class="table relative w-full ">
 
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th className='text-center' >Image</th>
-                            <th>Name</th>
-                            <th>Buyer</th>
-                            <th>Quantity</th>
-                            <th>Total <span className=' text-orange-500' >$</span></th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            userOrders?.map(({ BuyerEmail, Product, Quantity, pricePerUnit, ProductId, picture, price, isPaid, _id, transactionId }, i) =>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th className='text-center' >Image</th>
+                                <th>Name</th>
+                                <th>Buyer</th>
+                                <th>Quantity</th>
+                                <th>Total <span className=' text-orange-500' >$</span></th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                userOrders?.map(({ BuyerEmail, Product, Quantity, pricePerUnit, ProductId, picture, price, isPaid, _id, transactionId }, i) =>
 
-                                <tr key={i} className='border-[1px] border-t-0 border-gray-700 ' >
-                                    <th>{i + 1}</th>
-                                    <td> <div class="avatar">
-                                        <div class="w-24 mask mask-squircle">
-                                            <img src={picture} alt='ok' />
-                                        </div>
-                                    </div> </td>
-                                    <td className='text-xs' >{Product}</td>
-                                    <td>{BuyerEmail}</td>
-                                    <td>{Quantity}</td>
-                                    <td>{price * Quantity}</td>
-                                    <td>
+                                    <tr key={i} className='border-[1px] border-t-0 border-gray-700 ' >
+                                        <th>{i + 1}</th>
+                                        <td> <div class="avatar">
+                                            <div class="w-24 mask mask-squircle">
+                                                <img src={picture} alt='ok' />
+                                            </div>
+                                        </div> </td>
+                                        <td className='text-xs' >{Product}</td>
+                                        <td>{BuyerEmail}</td>
+                                        <td>{Quantity}</td>
+                                        <td>{price * Quantity}</td>
+                                        <td>
 
-                                        <div>
-                                            {isPaid ? <button class="btn btn-disabled btn-xs text-green-500 ">Paid </button> :
-                                                <div className='flex flex-col gap-4' >
-                                                    <label
-                                                        for="payment-modal"
-                                                        class="btn btn-xs btn-info"
-                                                        onClick={() => setDataForPaymentModal({ picture, _id, Product, Quantity, price, userName })}
-                                                    >Pay Now </label>
-                                                    <label
-                                                        for="delete-order-modal"
-                                                        class="btn modal-button btn-xs btn-error"
-                                                        onClick={() => setDataForModal({ picture, _id, Product })}
-                                                    >Cancel Order</label>
+                                            <div>
+                                                {isPaid ? <button class="btn btn-disabled btn-xs text-green-500 ">Paid </button> :
+                                                    <div className='flex flex-col gap-4' >
+                                                        <label
+                                                            for="payment-modal"
+                                                            class="btn btn-xs btn-info"
+                                                            onClick={() => setDataForPaymentModal({ picture, _id, Product, Quantity, price, userName })}
+                                                        >Pay Now </label>
+                                                        <label
+                                                            for="delete-order-modal"
+                                                            class="btn modal-button btn-xs btn-error"
+                                                            onClick={() => setDataForModal({ picture, _id, Product })}
+                                                        >Cancel Order</label>
 
-                                                </div>
-                                            }
-                                            {transactionId && <p className='text-xs text-start' > transactionId:- <br /> <span className='text-yellow-500 ' > {transactionId}</span></p>}
-                                        </div>
+                                                    </div>
+                                                }
+                                                {transactionId && <p className='text-xs text-start' > transactionId:- <br /> <span className='text-yellow-500 ' > {transactionId}</span></p>}
+                                            </div>
 
-                                    </td>
-                                </tr>)
-                        }
-                    </tbody>
-                </table>
+                                        </td>
+                                    </tr>)
+                            }
+                        </tbody>
+                    </table>
 
-            </div>
+                </div>}
             {dataForModal && <CancelOrderModal
                 dataForModal={dataForModal}
                 refetch={refetch}

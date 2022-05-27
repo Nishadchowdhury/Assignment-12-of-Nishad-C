@@ -21,28 +21,28 @@ const Payment = ({ dataForPaymentModal, setDataForPaymentModal, refetch }) => {
 
             <input type="checkbox" id="payment-modal" class="modal-toggle" />
             <div class=" lg:ml-80 md:ml-40 modal z-50">
-                <div class="modal-box w-11/12 max-w-5xl">
+                <div class="modal-box w-11/12 ">
                     <div  >
                         <div class="modal-action mt-0">
                             <label
                                 onClick={() => setDataForPaymentModal(null)}
-                                class="btn btn-md text-lg btn-circle"
+                                class="btn lg:btn-md btn-sm  lg:text-lg text-xs btn-circle"
                                 disabled={loading}
                             >✕</label>
                         </div>
-                        <div className='flex justify-center items-center flex-col gap-12 ' >
+                        <div className='flex w-full justify-center items-center flex-col gap-12 ' >
 
                             <div className=' flex justify-center shadow-2xl rounded-xl px-4 border-l-zinc-500 ' >
-                                <figure className=""  ><img src={picture} className='w-40 rounded-2xl h-full overflow-hidden' alt="Movie" /></figure>
+                                <figure className=""  ><img src={picture} className='lg:w-40  w-20 h-20 rounded-2xl lg:h-full  overflow-hidden' alt="Movie" /></figure>
 
-                                <div class="card-body pb-0 pr-0">
-                                    <h2 class="card-title text-warning "> {Product} </h2>
-                                    <p className='text-success  mt-2'>Total Cost :- <span className='text-black rounded-lg bg-white  p-2'>{total} USD </span>  </p>
+                                <div class=" lg:p-5 p-3 pr-0">
+                                    <h2 class="card-title lg:text-xl text-xs  text-warning "> {Product} </h2>
+                                    <p className='text-success lg:text-base text-xs mt-2'>Total Cost :- <span className=' text-black rounded-lg bg-white  text-sm  lg:p-2 p-1'>{total} USD </span>  </p>
                                 </div>
                             </div>
 
 
-                            <div className='  shadow-2xl rounded-xl border-l-zinc-500 min-w-[450px] p-5 py-2 min-h-28' >
+                            <div className='  shadow-2xl rounded-xl border-l-zinc-500 w-full lg:w-[450px] lg:p-5 lg:py-2 min-h-28' >
                                 <Elements stripe={stripePromise}>
                                     <CheckOutForm
                                         dataForPaymentModal={dataForPaymentModal} s

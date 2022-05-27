@@ -57,12 +57,12 @@ const Login = () => {
     return (
         <div>
 
-            <div className="hero min-h-[90vh] bg-white">
-                <div className="hero-content flex-col lg:flex-row-reverse  w-[400px]  ">
+            <div className="flex justify-center items-center  min-h-[90vh] bg-white">
+                <div className="hero-content flex-col lg:flex-row-reverse w-auto  ">
 
-                    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 pb-9">
+                    <div className="card w-[350px] lg:w-96 shadow-2xl bg-base-100 pb-9">
 
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} className="w-full">
 
                             <div className="card-body pb-0 ">
                                 <div className="form-control">

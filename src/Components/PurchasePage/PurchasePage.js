@@ -9,7 +9,7 @@ import { commonButton } from '../../Hooks/Classes';
 import rootUrl from '../../Hooks/RootUrl';
 import Loading from '../Shared/Loading/Loading';
 import OrderModal from './OrderModal';
-
+import loadingSvg from '../../Assets/Svg/loading-2.svg'
 const PurchasePage = () => {
     // disabled={!this.state.value}
     const id = useLocation().pathname.split('/')[2];
@@ -108,7 +108,7 @@ const PurchasePage = () => {
             </div>
             <div class="card lg:overflow-y-auto mx-auto w-11/12 border-[1px] lg:card-side bg-base-100 shadow-xl">
                 <div className=''>  <figure className='relative' >
-                    <img className='lg:w-[26rem] h-full ' src={picture} alt="Album" />
+                    <img className='lg:w-[26rem] h-full ' src={picture ? picture : loadingSvg} alt="Album" />
                     {+quantity === 0 && <span className='bg-red-500 text-white px-2 py-1 absolute w-auto h-auto top-0 left-0 ' > Out Of Stoke </span>}
                 </figure></div>
                 <div class="card-body">

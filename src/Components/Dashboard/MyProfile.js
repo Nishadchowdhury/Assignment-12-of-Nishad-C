@@ -70,7 +70,7 @@ const MyProfile = () => {
 
                 <div class="card lg:w-full card-side bg-base-100 shadow-xl border-[1px] border-slate-600">
                     <div class="avatar p-3 ">
-                        <div class="lg:w-56 lg:h-auto  w-10 h-10  rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <div class="lg:w-56 lg:h-auto  w-20 h-20  rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                             <img className='' src={photoURL} alt="" />
                         </div>
                     </div>
@@ -78,11 +78,11 @@ const MyProfile = () => {
                         <h2 class="card-title">{displayName}</h2>
                         <p>{email}</p>
                         <div class="card-actions justify-end">
-                            {!emailVerified ? <button class="btn hover:bg-red-400 bg-red-500 text-black"
+                            {!emailVerified ? <button class="btn btn-xs hover:bg-red-400 bg-red-500 text-black"
                                 // disabled={sending}
                                 onClick={handleVerification} >
-                                {<span className={`${sending && 'opacity-0'}`} >Verify Now</span>}
-                            </button> : <span className=' px-2 py-1 bg-green-500 rounded-xl text-white ' >Verified</span>}
+                                {<span className={`${sending && 'opacity-0'}  `} >Verify Now</span>}
+                            </button> : <span className=' px-2 py-1 btn-xs bg-green-500 rounded-xl text-white ' >Verified</span>}
                         </div>
                     </div>
                 </div>
