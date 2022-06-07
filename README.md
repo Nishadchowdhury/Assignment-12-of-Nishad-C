@@ -16,7 +16,9 @@ https://laparts-a12-nishad-server.herokuapp.com/
 
 # website Special features
 
-- Anyone one can visit the site and see all product
+- this is Laparts.com Anyone one can visit the site and see all product
+- Laparts.com is a website for laptop’s parts manufacturer company .
+- buyers can see Their products and they can order. There is a multi functional admin panel.
 - But to make a order must be log in.
 - when a user login if he verify his email , he can see a green dot on the right corner of his profile pic.
 - User Can update his profile any time and add extra details like his phone number his education his address his LinkedIn account
