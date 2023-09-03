@@ -1,44 +1,51 @@
-import React from 'react';
-import { useQuery } from 'react-query';
-import banner from '../../Assets/images/banner.jpg';
-import rootUrl from '../../Hooks/RootUrl';
-import Footer from '../Shared/Footer/Footer';
-import Loading from '../Shared/Loading/Loading';
-import BusinessSummery from './BusinessSummery';
-import ClientsReview from './ClientsReview';
-import PartsContainer from './PartsContainer';
-import SponsoredByHP from './SponsoredByHP';
-import UpComingProducts from './UpComingProducts';
+import React from "react";
+import { useQuery } from "react-query";
+import banner from "../../Assets/images/banner.jpg";
+import rootUrl from "../../Hooks/RootUrl";
+import Footer from "../Shared/Footer/Footer";
+import Loading from "../Shared/Loading/Loading";
+import BusinessSummery from "./BusinessSummery";
+import ClientsReview from "./ClientsReview";
+import PartsContainer from "./PartsContainer";
+import SponsoredByHP from "./SponsoredByHP";
+import UpComingProducts from "./UpComingProducts";
 
 const Home = () => {
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useQuery("limitedDataForHome", () =>
+    fetch(`${rootUrl}/ProductsLimit?total=3`).then(res => res.json())
+  );
 
-    const { data: product, isLoading, error } = useQuery('limitedDataForHome', () => fetch(`${rootUrl}/ProductsLimit?total=3`).then(res => res.json()));
+  const fetchData = { product, isLoading, error };
 
-    const fetchData = { product, isLoading, error }
+  if (isLoading) {
+    return <Loading />;
+  }
+  return (
+    <div>
+      <div className="opacity-70">
+        {" "}
+        <img className=" " src={banner} alt="banner img" />{" "}
+      </div>
 
-    if (isLoading) {
-        return <Loading />
-    }
-    return (
-        <div>
+      <PartsContainer fetchData={fetchData} />
 
-            <div className='' > <img className=' ' src={banner} alt="banner img" /> </div>
+      <hr className="mt-10 opacity-40 " />
 
-            <PartsContainer fetchData={fetchData} />
+      <BusinessSummery />
 
-            <hr className='mt-10 opacity-40 ' />
+      <ClientsReview />
 
-            <BusinessSummery />
+      {/* extra 2 section */}
+      <UpComingProducts />
+      <SponsoredByHP />
 
-            <ClientsReview />
-
-            {/* extra 2 section */}
-            <UpComingProducts />
-            <SponsoredByHP />
-
-            <Footer />
-        </div>
-    );
+      <Footer />
+    </div>
+  );
 };
 
 export default Home;

@@ -1,3 +1,5 @@
-const rootUrl = "https://laparts-a12-nishad-server.herokuapp.com";
-// const rootUrl = "http://localhost:5000";
+const dev = process.env.NODE_ENV === "development";
+const rootUrl = dev
+  ? "http://localhost:5000"
+  : "https://laparts-server.onrender.com";
 export default rootUrl;
