@@ -1,25 +1,25 @@
 {
   "short_name": "laparts",
-  "name": "Restructure your laptop",
+  "name": "Restructure your laptops.",
   "icons": [
     {
-      "src": "https://i.ibb.co/df1QZj8/FavIcon.png",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon/png"
+      "src": "favicon.ico",
+      "sizes": "128x128 64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
     },
     {
-      "src": "https://i.ibb.co/df1QZj8/FavIcon.png",
+      "src": "laparts.png",
       "type": "image/png",
       "sizes": "128x128"
     },
     {
-      "src": "https://i.ibb.co/df1QZj8/FavIcon.png",
+      "src": "logo52.png",
       "type": "image/png",
-      "sizes": "128x128"
+      "sizes": "512x512 256x256 128x128"
     }
   ],
-  "start_url": ".",
+  "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#000000"
+  "background_color": "#ffffff"
 }
